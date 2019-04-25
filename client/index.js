@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from './store'
+import store from './store';
 
 import { Deck, Table } from './components';
+import NewApp from './components/testdragndrop';
 
 const App = () => {
   return (
@@ -14,9 +15,11 @@ const App = () => {
   );
 };
 
+
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <NewApp />
   </Provider>,
   document.getElementById('app')
 );

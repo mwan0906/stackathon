@@ -35,10 +35,9 @@ export const shuffleCards = () => {
   return async (dispatch, getState) => {
     try {
       const { id } = await getState();
-      const { data } = await axios.get(
+      await axios.get(
         `https://deckofcardsapi.com/api/deck/${id}/shuffle/`
       );
-      dispatch(deckSetter(data));
     } catch (err) {
       console.error(err);
     }
