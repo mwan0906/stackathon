@@ -5,9 +5,9 @@ import Task from './testtask';
 export default class Column extends React.Component {
   render() {
     return (
-      <div>
+      <div id={this.props.column.id}>
         <h1>{this.props.column.title}</h1>
-        <Droppable droppableId={this.props.column.id}>
+        <Droppable isCombineEnabled droppableId={this.props.column.id}>
           {provided => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
               {this.props.tasks.map((task, index) => (

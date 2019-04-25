@@ -1,5 +1,9 @@
+body {
+  background: url('32281196-green-casino-table-background.jpg') no-repeat center fixed; 
+  background-size: cover;
+}
+
 div {
   padding: 5px;
-  margin: 5px;
   background-color: lightpink;
 }
