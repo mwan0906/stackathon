@@ -34,7 +34,7 @@ const table = props => {
 
 const mapStateToProps = state => {
   return {
-    cards: state.cardsOnTable
+    cards: state.cardHands
   };
 };
 

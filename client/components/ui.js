@@ -37,7 +37,7 @@ const disconnectedDeckDisplay = props => {
 };
 const mapStateToProps = state => {
   return {
-    id: state.id
+    id: state.deck.id
   };
 };
 const mapDispatchToProps = dispatch => {
