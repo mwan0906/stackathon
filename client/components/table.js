@@ -24,9 +24,17 @@ const table = props => {
   const total = calcValue(cards);
   console.log('total for', props.player, ':', total);
   return (
-    <div id={props.player} className='cardspread'>
-      {cards.map(card => (
-        <img key={card.code} src={card.image} className='card' />
+    <div id={props.player} className="cardspread">
+      {cards.map((card, index) => (
+        <img
+          key={card.code}
+          src={
+            props.player !== 'self' && index
+              ? 'https://i.pinimg.com/236x/10/80/a4/1080a4bd1a33cec92019fab5efb3995d--card-deck-playing-cards.jpg'
+              : card.image
+          }
+          className="card"
+        />
       ))}
     </div>
   );
