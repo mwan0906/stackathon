@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { newDeckGetter, shuffleCards, getCards } from '../store';
+import { newDeckGetter, shuffleCards, getCards, calcScores } from '../store';
 
 const disconnectedDeckDisplay = props => {
   return (
@@ -13,8 +13,11 @@ const disconnectedDeckDisplay = props => {
           <button type="button" onClick={props.shuffle}>
             shuffle existing deck
           </button>
+          <button type="button" onClick={props.calcScores}>
+            calculate scores
+          </button>
           <br />
-          {['self', 'opp1', 'opp2', 'opp3'].map(player =>
+          {['self', 'opp1', 'opp2', 'opp3'].map(player => (
             <div key={player}>
               <button
                 type="button"
@@ -29,7 +32,7 @@ const disconnectedDeckDisplay = props => {
                 draw card for {player}
               </button>
             </div>
-          )}
+          ))}
         </React.Fragment>
       )}
     </div>
@@ -44,7 +47,8 @@ const mapDispatchToProps = dispatch => {
   return {
     newDeck: () => dispatch(newDeckGetter()),
     shuffle: () => dispatch(shuffleCards()),
-    getCards: (num, pile, type) => dispatch(getCards(num, pile, type))
+    getCards: (num, pile, type) => dispatch(getCards(num, pile, type)),
+    calcScores: () => dispatch(calcScores())
   };
 };
 

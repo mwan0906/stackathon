@@ -1,3 +1,5 @@
+import { CALC_SCORE } from './actiontypes';
+
 const intialState = {
   opp1: {
     score: 0
@@ -15,6 +17,15 @@ const intialState = {
 
 export default (state = intialState, action) => {
   switch (action.type) {
+    case CALC_SCORE:
+      const newScores = { ...state };
+      Object.keys(action.scores).forEach(player => {
+        const newPlayer = {... newScores[player]};
+        newPlayer.score += action.scores[player];
+        newScores[player] = newPlayer;
+      });
+      return newScores;
+
     default:
       return state;
   }
