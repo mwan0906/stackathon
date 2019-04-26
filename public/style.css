@@ -47,3 +47,20 @@ div {
   padding: 5px;
   background-color: lightpink;
 }
+
+#workspace {
+  height: 80vh;
+  overflow: auto;
+}
+#workspace, #workspace div {
+  background-color: black;
+  color: greenyellow;
+}
+.blank {
+  background-color: white;
+  color: gray;
+  padding: 5px;
+}
+.selected {
+  outline: 4px dotted red;
+}

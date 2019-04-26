@@ -13,7 +13,7 @@ const initialData = {
   },
   workspace: {
     id: 'column-1',
-    title: 'to-do',
+    title: 'WORKSPACE',
     taskIds: ['task-1', 'task-2', 'task-3', 'task-4']
   }
 };
@@ -26,12 +26,27 @@ export default class NewApp extends React.Component {
     this.onDragUpdate = this.onDragUpdate.bind(this);
     this.onDragStart = this.onDragStart.bind(this);
     this.newBlock = this.newBlock.bind(this);
+    this.reset = this.reset.bind(this);
+    this.display = this.display.bind(this);
   }
 
   componentDidMount() {
     document
       .getElementById('workspace')
-      .addEventListener('click', e => console.log(e.target));
+      .addEventListener('click', e => {
+        const selectedNode = document.querySelector('.selected');
+        if (selectedNode) selectedNode.classList.remove('selected')
+        const clickedNode = e.target;
+        if (clickedNode.classList.contains('blank')) clickedNode.classList.add('selected');
+      });
+  }
+
+  reset() {
+    this.setState(initialData);
+  }
+
+  display() {
+    console.log(this.state.workspace.taskIds)
   }
 
   newBlock() {
@@ -45,8 +60,10 @@ export default class NewApp extends React.Component {
           children: []
         }
       },
-      workspace: {...this.state.workspace,
-      taskIds: [...this.state.workspace.taskIds, newTaskId]}
+      workspace: {
+        ...this.state.workspace,
+        taskIds: [...this.state.workspace.taskIds, newTaskId]
+      }
     });
     console.log(this.state);
   }
@@ -64,8 +81,7 @@ export default class NewApp extends React.Component {
 
     const { destination, source, draggableId } = result;
     if (destination && destination.index !== source.index) {
-      
-      const newWorkspace = {...this.state.workspace}
+      const newWorkspace = { ...this.state.workspace };
       const newTaskIds = Array.from(newWorkspace.taskIds);
 
       newTaskIds.splice(source.index, 1);
@@ -84,6 +100,15 @@ export default class NewApp extends React.Component {
     console.log(this.state);
     return (
       <div id="workspace">
+        <button type="button" onClick={this.reset}>
+          Reset
+        </button>
+        <button type="button" onClick={this.display}>
+          Display
+        </button>
+        <button type="button" onClick={this.newBlock}>
+          Make New Block
+        </button>
         <DragDropContext
           onDragStart={this.onDragStart}
           onDragUpdate={this.onDragUpdate}
@@ -97,10 +122,6 @@ export default class NewApp extends React.Component {
             )}
           />
         </DragDropContext>
-        <button type="button" onClick={this.reset}>
-          Reset
-        </button>
-        <button type="button" onClick={this.newBlock}>Make New Block</button>
       </div>
     );
   }
