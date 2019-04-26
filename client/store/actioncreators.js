@@ -68,7 +68,7 @@ const scoreSetter = scores => ({
   scores
 });
 
-const calcValue = cards => {
+export const calcValue = cards => {
   let total = 0;
   let aces = 0;
   cards.forEach(card => {
@@ -120,8 +120,7 @@ const standCreator = pile => ({
 export const makeMove = () => {
   return async (dispatch, getState) => {
     try {
-      const { players, cardHands } = await getState();
-      console.log(players);
+      const { players, cardHands, deck } = await getState();
       let hitPlayers = 0;
       Object.keys(players).forEach(player => {
         if (
@@ -129,7 +128,19 @@ export const makeMove = () => {
           calcValue(cardHands[player]) < 21
         ) {
           const { logic } = players[player];
-          const result = logic();
+
+          const toGiveToFunction = {
+            deck,
+            hand: cardHands[player],
+            otherCards: []
+          };
+
+          Object.keys(players).forEach(otherPlayer => {
+            if (otherPlayer !== player)
+              toGiveToFunction.otherCards.push(cardHands[otherPlayer][0]);
+          });
+
+          const result = logic(toGiveToFunction);
           if (result === 'hit') {
             hitPlayers++;
             dispatch(getCards(player, 'draw'));
@@ -139,7 +150,6 @@ export const makeMove = () => {
       if (!hitPlayers) {
         dispatch(calcScores());
       }
-      dispatch({ type: 'no' });
     } catch (err) {
       console.error(err);
     }

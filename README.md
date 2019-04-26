@@ -29,16 +29,93 @@ Once a bot is unleashed, there can be no modifications made to its behavior mid-
 * * If
 * * Then
 * * Else
-* * And
-* * Or
-* * Random
-* A.I.s will keep track of:
-* * what their current hand is
-* * what cards have been been revealed so far, and consequently which cards may still be in the deck
-* * how many cards other people have
 * Actions:
 * * Hit
 * * Stand
 * Conjunctions:
 * * And
 * * Or
+* Comparisons:
+* * ===
+* * < / >
+* * !==
+* Math:
+* * x + - /
+* * Random
+
+* How it will work:
+- User can press buttons on the side to add a block to the working area
+- Blocks can be rearranged by dragging and dropping
+- Clicking on a block lets you put more blocks within that block
+- Submit button will not be available unless all fillable blocks are filled and all branches lead to either a Hit or a Stand
+
+Valid workspace arrangements:
+
+- [ [ Stand ] ]
+
+- [
+    If
+      [
+        [ Hand's Value ]
+        >
+        [ 17 ]
+      ]
+    Then
+      [
+        [ Stand ]
+      ]
+    Else
+      [
+        [ Hit ]
+      ]
+  ]
+
+- [
+    [
+      If
+        [
+          [ Hand's Value ]
+          >
+          [ 17 ]
+        ]
+      Then
+        [
+          [ Stand ]
+        ]
+    ]
+    [ Hit ]
+  ]
+
+- [
+    [
+      If
+        [
+          [
+            [ Number Of [ ACES ] in [ My Hand ] ]
+            ===
+            [ 1 ]
+          ]
+          AND
+          [
+            [ Number Of [ ACES ] in [ Other People's Visible Cards ] ]
+            <
+            2
+          ]
+        ]
+      Then
+        [
+          [ Hit ]
+        ]
+    ]
+    [
+      If
+        [
+          Random [ 1 / 6 chance ]
+        ]
+      Then
+        [
+          [ Stand ]
+        ]
+    ]
+    [ Hit ]
+  ]

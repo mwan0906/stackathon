@@ -1,4 +1,5 @@
-import { CALC_SCORE, HIT, STAND } from './actiontypes';
+import { HIT, STAND } from './actiontypes';
+import { calcValue } from './actioncreators'
 
 const random = odds => odds > Math.random();
 
@@ -22,7 +23,10 @@ const intialState = {
     history: []
   },
   self: {
-    logic: () => {
+    logic: info => {
+      const { deck, hand, otherCards } = info;
+      const handValue = calcValue(hand);
+      if (handValue > 16) return 'stand'
       return 'hit';
     },
     history: []
@@ -38,15 +42,6 @@ export default (state = intialState, action) => {
       newHistory.unshift(action.type);
       newPlayer.history = newHistory;
       return { ...state, [action.pile]: newPlayer };
-    case CALC_SCORE:
-      const newScores = { ...state };
-      Object.keys(action.scores).forEach(player => {
-        const newPlayer = { ...newScores[player] };
-        newPlayer.score += action.scores[player];
-        newScores[player] = newPlayer;
-      });
-      return newScores;
-
     default:
       return state;
   }

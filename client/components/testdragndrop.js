@@ -87,7 +87,7 @@ export default class NewApp extends React.Component {
             ? sourceNewTaskIds
             : Array.from(destinationColumn.taskIds);
 
-//        sourceNewTaskIds.splice(source.index, 1);
+        sourceNewTaskIds.splice(source.index, 1);
         destinationNewTaskIds.splice(destination.index, 0, draggableId);
 
         const sourceNewColumn = {

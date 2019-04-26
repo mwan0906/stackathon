@@ -1,5 +1,6 @@
 body {
-  background: url('32281196-green-casino-table-background.jpg') no-repeat center fixed; 
+  background: url('32281196-green-casino-table-background.jpg') no-repeat center
+    fixed;
   background-size: cover;
 }
 
@@ -24,14 +25,18 @@ body {
 
 #center {
   display: flex;
+  height: 50vh;
 }
 #center > .cardspread {
   flex-flow: column;
 }
 #centercolumn {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-self: center;
+  justify-content: space-between;
 }
 
 #ui {
@@ -41,5 +46,4 @@ body {
 div {
   padding: 5px;
   background-color: lightpink;
-  border: 2px solid black;
 }
