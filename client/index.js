@@ -6,6 +6,7 @@ import store from './store';
 
 import { UI, Table } from './components';
 import NewApp from './components/testdragndrop';
+//import Workspace from './components/workspace'
 
 class App extends React.Component {
   constructor(props) {

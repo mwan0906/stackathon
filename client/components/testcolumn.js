@@ -7,7 +7,7 @@ export default class Column extends React.Component {
     return (
       <div id={this.props.column.id}>
         <h1>{this.props.column.title}</h1>
-        <Droppable isCombineEnabled droppableId={this.props.column.id}>
+        <Droppable droppableId={this.props.column.id}>
           {provided => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
               {this.props.tasks.map((task, index) => (
