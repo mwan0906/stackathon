@@ -10,12 +10,11 @@ export default class Task extends React.Component {
     return (
       <Draggable draggableId={this.props.task.id} index={this.props.index}>
         {provided => (
-          <div
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-          >
-            <h1>{this.props.task.content}</h1>
+          <div {...provided.draggableProps} ref={provided.innerRef}>
+            <div {...provided.dragHandleProps}>{this.props.task.content}</div>
+            {this.props.task.children.map((task, index) => (
+              <Task key={task.id} task={task} index={index} />
+            ))}
           </div>
         )}
       </Draggable>

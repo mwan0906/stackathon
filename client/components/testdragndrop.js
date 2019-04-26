@@ -4,10 +4,10 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 const initialData = {
   tasks: {
-    'task-1': { id: 'task-1', content: 'do this 1' },
-    'task-2': { id: 'task-2', content: 'do this 2' },
-    'task-3': { id: 'task-3', content: 'do this 3' },
-    'task-4': { id: 'task-4', content: 'do this 4' }
+    'task-1': { id: 'task-1', content: 'do this 1', children: [] },
+    'task-2': { id: 'task-2', content: 'do this 2', children: [] },
+    'task-3': { id: 'task-3', content: 'do this 3', children: [] },
+    'task-4': { id: 'task-4', content: 'do this 4', children: [] }
   },
   columns: {
     'column-1': {
@@ -57,12 +57,21 @@ export default class NewApp extends React.Component {
   }
 
   onDragEnd(result) {
+    console.log('source:', result.source);
     if (result.combine) {
       const { combine, source, draggableId } = result;
-      console.log(combine.draggableId);
-      const draggedInto = this.state.columns[combine.droppableId];
-      console.log(draggedInto);
-    } else {
+      const destination = this.state.tasks[combine.draggableId];
+      const newDestination = { ...destination };
+      newDestination.children.push(this.state.tasks[draggableId]);
+      const newColumn = { ...this.state.columns[source.droppableId] };
+      const newTaskIds = [...newColumn.taskIds];
+      newTaskIds.splice(source.index, 1);
+      newColumn.taskIds = newTaskIds;
+      this.setState({
+        columns: { ...this.state.columns, [source.droppableId]: newColumn }
+      });
+    }
+    else {
       const { destination, source, draggableId } = result;
       if (
         destination &&
@@ -78,7 +87,7 @@ export default class NewApp extends React.Component {
             ? sourceNewTaskIds
             : Array.from(destinationColumn.taskIds);
 
-        sourceNewTaskIds.splice(source.index, 1);
+//        sourceNewTaskIds.splice(source.index, 1);
         destinationNewTaskIds.splice(destination.index, 0, draggableId);
 
         const sourceNewColumn = {
@@ -103,6 +112,7 @@ export default class NewApp extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <DragDropContext

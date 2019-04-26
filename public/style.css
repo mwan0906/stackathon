@@ -3,7 +3,36 @@ body {
   background-size: cover;
 }
 
+.cardspread {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 113px;
+  height: 157px;
+}
+
+#center {
+  display: flex;
+}
+#center > .cardspread {
+  flex-flow: column-reverse;
+}
+#centercolumn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#ui {
+  text-align: center;
+}
+
 div {
   padding: 5px;
   background-color: lightpink;
+  border: 2px solid black;
 }

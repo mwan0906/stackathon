@@ -1,2 +1,2 @@
-export { default as Deck } from './deck';
+export { default as UI } from './ui';
 export { default as Table } from './table';
