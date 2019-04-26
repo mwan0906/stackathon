@@ -1,4 +1,4 @@
-import { UPDATE_DECK, NEW_HAND, DRAW } from './actiontypes';
+import { UPDATE_DECK, NEW_HAND, HIT } from './actiontypes';
 
 const initialState = {
   self: [],
@@ -11,12 +11,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_DECK:
       return initialState
-    case DRAW:
+    case HIT:
     case NEW_HAND:
       const newCardsOnTable = { ...state };
-      action.type === DRAW
+      action.type === HIT
         ? newCardsOnTable[action.pile].push(action.cards[0])
-        : (newCardsOnTable[action.pile] = action.cards);
+        : newCardsOnTable[action.pile] = action.cards;
       return newCardsOnTable;
     default:
       return state;

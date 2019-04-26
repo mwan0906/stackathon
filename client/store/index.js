@@ -6,11 +6,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import cardHandsReducer from './cardhands';
 import deckReducer from './deckinfo';
 import playerReducer from './playerinfo';
+import gameReducer from './game';
 
 const reducer = combineReducers({
   cardHands: cardHandsReducer,
   deck: deckReducer,
-  players: playerReducer
+  players: playerReducer,
+  game: gameReducer
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

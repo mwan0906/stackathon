@@ -1,8 +1,7 @@
-import { UPDATE_DECK, DRAW, NEW_HAND } from './actiontypes';
+import { UPDATE_DECK, HIT, NEW_HAND } from './actiontypes';
 
 const initialState = {
   id: '',
-  phase: 'start',
   unaccountedFor: {
     ACE: 4,
     2: 4,
@@ -27,7 +26,7 @@ export default (state = initialState, action) => {
       return { ...initialState, id: action.deck.deck_id };
     case NEW_HAND:
       if (action.pile !== 'self') newUnaccountedFor[action.cards[0].value]--;
-    case DRAW:
+    case HIT:
       if (action.pile === 'self') {
         action.cards.forEach(card => newUnaccountedFor[card.value]--);
       }

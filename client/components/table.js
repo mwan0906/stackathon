@@ -9,7 +9,7 @@ const table = props => {
         <img
           key={card.code}
           src={
-            props.player !== 'self' && index
+            props.player !== 'self' && index && !(props.phase === 'show')
               ? 'https://i.pinimg.com/236x/10/80/a4/1080a4bd1a33cec92019fab5efb3995d--card-deck-playing-cards.jpg'
               : card.image
           }
@@ -22,7 +22,8 @@ const table = props => {
 
 const mapStateToProps = state => {
   return {
-    cards: state.cardHands
+    cards: state.cardHands,
+    phase: state.game.phase
   };
 };
 

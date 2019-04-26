@@ -1,34 +1,43 @@
-import { CALC_SCORE } from './actiontypes';
+import { CALC_SCORE, HIT, STAND } from './actiontypes';
+
+const random = odds => odds > Math.random();
 
 const intialState = {
   opp1: {
-    score: 0,
     logic: () => {
-      return 'hit';
-    }
+      return 'stand';
+    },
+    history: []
   },
   opp2: {
-    score: 0,
     logic: () => {
-      return 'hit';
-    }
+      return random(5 / 6) ? 'hit' : 'stand';
+    },
+    history: []
   },
   opp3: {
-    score: 0,
     logic: () => {
       return 'hit';
-    }
+    },
+    history: []
   },
   self: {
-    score: 0,
     logic: () => {
       return 'hit';
-    }
+    },
+    history: []
   }
 };
 
 export default (state = intialState, action) => {
   switch (action.type) {
+    case HIT:
+    case STAND:
+      const newPlayer = { ...state[action.pile] };
+      const newHistory = [...newPlayer.history];
+      newHistory.unshift(action.type);
+      newPlayer.history = newHistory;
+      return { ...state, [action.pile]: newPlayer };
     case CALC_SCORE:
       const newScores = { ...state };
       Object.keys(action.scores).forEach(player => {
