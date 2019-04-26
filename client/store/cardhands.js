@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
     case NEW_HAND:
       const newCardsOnTable = { ...state };
       action.type === DRAW
-        ? newCardsOnTable[action.pile].push(...action.cards)
+        ? newCardsOnTable[action.pile].push(action.cards[0])
         : (newCardsOnTable[action.pile] = action.cards);
       return newCardsOnTable;
     default:

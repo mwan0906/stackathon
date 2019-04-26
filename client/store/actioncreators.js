@@ -19,31 +19,18 @@ export const newDeckGetter = () => {
   };
 };
 
-export const shuffleCards = () => {
-  return async (dispatch, getState) => {
-    try {
-      const { deck } = await getState();
-      await axios.get(
-        `https://deckofcardsapi.com/api/deck/${deck.id}/shuffle/`
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};
-
 const newOrDrawSetter = (cards, pile, type) => ({
   type: type === 'new' ? NEW_HAND : DRAW,
   cards,
   pile
 });
 
-export const getCards = (number, pile, type) => {
+export const getCards = (pile, type) => {
   return async (dispatch, getState) => {
     try {
       const { deck } = await getState();
       const { data } = await axios.get(
-        `https://deckofcardsapi.com/api/deck/${deck.id}/draw/?count=${number}`
+        `https://deckofcardsapi.com/api/deck/${deck.id}/draw/?count=${type === 'new' ? 2 : 1}`
       );
       dispatch(newOrDrawSetter(data.cards, pile, type));
     } catch (err) {

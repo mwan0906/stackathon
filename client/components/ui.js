@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { newDeckGetter, shuffleCards, getCards, calcScores } from '../store';
+import { newDeckGetter, getCards, calcScores } from '../store';
 
 const disconnectedDeckDisplay = props => {
   return (
@@ -10,9 +10,6 @@ const disconnectedDeckDisplay = props => {
       </button>
       {props.id && (
         <React.Fragment>
-          <button type="button" onClick={props.shuffle}>
-            shuffle existing deck
-          </button>
           <button type="button" onClick={props.calcScores}>
             calculate scores
           </button>
@@ -21,18 +18,25 @@ const disconnectedDeckDisplay = props => {
             <div key={player}>
               <button
                 type="button"
-                onClick={() => props.getCards(2, player, 'new')}
+                onClick={() => props.getCards(player, 'new')}
               >
                 new hand for {player}
               </button>
               <button
                 type="button"
-                onClick={() => props.getCards(1, player, 'draw')}
+                onClick={() => props.getCards(player, 'draw')}
               >
                 draw card for {player}
               </button>
             </div>
           ))}
+          <br />
+          <button type='button'>
+            Hit
+          </button>
+          <button type='button'>
+            Stand
+          </button>
         </React.Fragment>
       )}
     </div>
@@ -46,8 +50,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     newDeck: () => dispatch(newDeckGetter()),
-    shuffle: () => dispatch(shuffleCards()),
-    getCards: (num, pile, type) => dispatch(getCards(num, pile, type)),
+    getCards: (pile, type) => dispatch(getCards(pile, type)),
     calcScores: () => dispatch(calcScores())
   };
 };
