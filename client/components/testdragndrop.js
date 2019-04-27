@@ -1,19 +1,18 @@
 import React from 'react';
-import Column from './testcolumn';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { connect } from 'react-redux';
+//import Task from './testtask';
+import Block from './blocks';
+import { selectMaker } from '../store/work/actioncreators';
 
-let numTasks = 0;
+let numBlocks = 0;
 
 const initialData = {
-  tasks: {},
-  workspace: {
-    id: 'column-1',
-    title: 'WORKSPACE',
-    taskIds: []
-  }
+  blocks: {},
+  blockIds: []
 };
 
-export default class NewApp extends React.Component {
+class NewApp extends React.Component {
   constructor() {
     super();
     this.state = initialData;
@@ -26,13 +25,9 @@ export default class NewApp extends React.Component {
   }
 
   componentDidMount() {
-    document.getElementById('workspace').addEventListener('click', e => {
-      const selectedNode = document.querySelector('.selected');
-      if (selectedNode) selectedNode.classList.remove('selected');
-      const clickedNode = e.target;
-      if (clickedNode.classList.contains('blank'))
-        clickedNode.classList.add('selected');
-    });
+    document
+      .getElementById('workspace')
+      .addEventListener('click', e => this.props.selectNode(e.target));
   }
 
   reset() {
@@ -40,27 +35,21 @@ export default class NewApp extends React.Component {
   }
 
   display() {
-    this.state.workspace.taskIds.forEach(task =>
-      console.log(this.state.tasks[task])
-    );
+    this.state.blockIds.forEach(block => console.log(this.state.blocks[block]));
   }
 
   newBlock() {
-    const newTaskId = `task-${++numTasks}`;
+    const newBlockId = `block-${++numBlocks}`;
     this.setState({
-      tasks: {
-        ...this.state.tasks,
-        [newTaskId]: {
-          id: newTaskId,
+      blocks: {
+        ...this.state.blocks,
+        [newBlockId]: {
+          id: newBlockId,
           content: 'AAAAAAAAAAAAAAAAAAAAAAAAAA'
         }
       },
-      workspace: {
-        ...this.state.workspace,
-        taskIds: [...this.state.workspace.taskIds, newTaskId]
-      }
+      blockIds: [...this.state.blockIds, newBlockId]
     });
-    console.log(this.state);
   }
 
   onDragStart(e) {
@@ -74,18 +63,15 @@ export default class NewApp extends React.Component {
   onDragEnd(result) {
     const { destination, source, draggableId } = result;
     if (destination && destination.index !== source.index) {
-      const newWorkspace = { ...this.state.workspace };
-      const newTaskIds = Array.from(newWorkspace.taskIds);
+      const newBlockIds = [...this.state.blockIds];
 
-      newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, draggableId);
+      newBlockIds.splice(source.index, 1);
+      newBlockIds.splice(destination.index, 0, draggableId);
 
       this.setState({
-        workspace: {
-          ...this.state.workspace,
-          taskIds: newTaskIds
-        }
+        blockIds: newBlockIds
       });
+      console.log(this.state);
     }
   }
 
@@ -101,22 +87,51 @@ export default class NewApp extends React.Component {
         <button type="button" onClick={this.newBlock}>
           Make New Block
         </button>
+
         <div id="workspace">
           <DragDropContext
             onDragStart={this.onDragStart}
             onDragUpdate={this.onDragUpdate}
             onDragEnd={this.onDragEnd}
           >
-            <Column
-              key="column-1"
-              column={this.state.workspace}
-              tasks={this.state.workspace.taskIds.map(
-                taskId => this.state.tasks[taskId]
-              )}
-            />
+            <div id="work">
+              <h1>WORKSPACE</h1>
+              <Droppable droppableId="work">
+                {provided => (
+                  <div {...provided.droppableProps} ref={provided.innerRef}>
+                    {this.state.blockIds.map((blockId, index) => (
+                      <Block
+                        key={blockId}
+                        block={this.state.blocks[blockId]}
+                        index={index}
+                      />
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
           </DragDropContext>
         </div>
       </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    selectedId: state.work.selectedId,
+    availableBlockTypes: state.work.availableBlockTypes
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    selectNode: e => dispatch(selectMaker(e))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewApp);

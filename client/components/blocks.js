@@ -1,28 +1,31 @@
-/* import React from 'react';
+import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
 let numBlocks = 0;
 
-class Block extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const Block = props => {
+  const block = props.block;
+  return (
+    <Draggable draggableId={block.id} index={props.index}>
+      {provided => (
+        <div {...provided.draggableProps} ref={provided.innerRef} id={block.id}>
+          <b {...provided.dragHandleProps}>
+            {block.content}
+            {block.id}
+          </b>
+          <div>
+            fjkskhes s hskjs
+            <span className="blank">CLICK HERE TO DO A THING</span> gshhk gf
+            khgd h jkfd khgkdgjherkgher
+          </div>
+        </div>
+      )}
+    </Draggable>
+  );
+};
 
-  render() {
-    console.log(numBlocks)
-    return (
-      <Draggable draggableId={numBlocks} index={0}>
-        <div className={this.props.type}>block</div>
-      </Draggable>
-    );
-  }
+const IfBlock = props => {
+  return <Block />
 }
 
-export const IfBlock = () => {
-  return <Block type="if" />;
-};
-
-export const MarioBlock = () => {
-  return <Block type="mario" />;
-};
- */
+export default Block;
