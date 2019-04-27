@@ -8,6 +8,10 @@ h3 {
   margin: 5px;
 }
 
+input {
+  width: 40px;
+}
+
 .cardspread {
   display: flex;
   align-content: center;
@@ -54,6 +58,7 @@ div {
 
 #menu {
   display: flex;
+  justify-content: space-around;
 }
 .workspace {
   height: 80vh;
@@ -61,22 +66,84 @@ div {
 }
 .workspace, .workspace div {
   background-color: black;
-  color: greenyellow;
+  color: white;
 }
 .blank {
   background-color: white;
   color: gray;
   padding: 5px;
 }
-.block {
-  outline: 1px solid white;
+
+#math-buttons button {
+  background-color: #43bc7c;
+}
+.MATH.block {
+  outline: 1px solid #43bc7c;
 }
 .MATH.block, .MATH.block div:not(.block) {
-  background-color: red;
-  color: white;
+  color: #43bc7c;
 }
-.selected {
-  outline: 4px dotted red;
+
+#value-buttons button {
+  background-color: #ce9178;
+}
+.VALUE.block {
+  outline: 1px solid #ce9178;
+}
+.VALUE.block, .VALUE.block div:not(.block) {
+  color: #ce9178;
+}
+
+#conjunction-buttons button {
+  background-color: #9cdcfe;
+}
+.CONJUNCTION.block {
+  outline: 1px solid #9cdcfe;
+}
+.CONJUNCTION.block, .CONJUNCTION.block div:not(.block) {
+  color: #9cdcfe;
+}
+
+#conditional-buttons button {
+  background-color: #569cd6;
+}
+.CONDITIONAL.block {
+  outline: 1px solid #569cd6;
+}
+.CONDITIONAL.block, .CONDITIONAL.block div:not(.block) {
+  color: #569cd6;
+}
+
+#comparison-buttons button {
+  background-color: #dcdcaa;
+}
+.COMPARISON.block {
+  outline: 1px solid #dcdcaa;
+}
+.COMPARISON.block, .COMPARISON.block div:not(.block) {
+  color: #dcdcaa;
+}
+
+#action-buttons button {
+  background-color: red;
+}
+.ACTION.block {
+  outline: 1px solid red;
+}
+.ACTION.block, .ACTION.block div:not(.block) {
+  color: red;
+}
+
+#menu button {
+  text-align: center;
+  font-size: 18px;
+}
+#menu > div {
+  justify-content: center;
+}
+
+.block.selected {
+  outline: 4px dotted white;
 }
 .blank.selected {
   outline: 4px dotted white;

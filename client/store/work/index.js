@@ -4,10 +4,10 @@ import { ACTION, CONDITIONAL, COMPARISON, CONJUNCTION, VALUE, MATH } from './blo
 
 const blocksAccepted = {
   ACTION: [],
-  CONDITIONAL: [[COMPARISON], [ACTION, CONDITIONAL], [ACTION, CONDITIONAL]],
+  CONDITIONAL: [[COMPARISON, CONJUNCTION], [ACTION, CONDITIONAL], [ACTION, CONDITIONAL]],
   COMPARISON: [[VALUE, MATH], [VALUE, MATH]],
   CONJUNCTION: [[COMPARISON], [COMPARISON]],
-  VALUE: [],
+  VALUE: [[VALUE, MATH], [VALUE, MATH]],
   MATH: [[VALUE, MATH], [VALUE, MATH]],
   DEFAULT: [ACTION, CONDITIONAL]
 };
@@ -84,10 +84,11 @@ const reducer = (state = initialState, action) => {
         newSelectedBlankId = clickedNode.id;
         clickedNode.classList.add('selected');
 
-        newAvailableBlockTypes = blocksAccepted[grandparent.classList[0]];
+        const blankIndex = Number(newSelectedBlankId.slice(-1));
+        newAvailableBlockTypes = blocksAccepted[grandparent.classList[0]][blankIndex];
       }
       
-      else {
+      else if (clickedNode.tagName !== 'SELECT' && clickedNode.tagName !== 'INPUT') {
         const hasBlockParent = blockParent(clickedNode);
         if (hasBlockParent) {
           // The user selected a block, but not a blank space

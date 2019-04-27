@@ -5,11 +5,17 @@ import {
   ACTION,
   CONDITIONAL,
   COMPARISON,
+  CONJUNCTION,
   VALUE,
   MATH
 } from '../store/work/blocktypes';
 
-import MathBody from './blocks-math'
+import ActionBody from './blocks-action';
+import ConditionalBody from './blocks-conditional';
+import ComparisonBody from './blocks-comparison';
+import ConjunctionBody from './blocks-conjunction';
+import MathBody from './blocks-math';
+import ValueBody from './blocks-value';
 
 const Block = props => {
   if (props.topLevel) {
@@ -43,7 +49,12 @@ const DisconnectedInnerBlock = props => {
         {block.subType}
       </h3>
       {block.type === MATH ? <MathBody block={block} /> :
-      <div>what is even going on</div>}
+      block.type === VALUE ? <ValueBody block={block} /> :
+      block.type === CONJUNCTION ? <ConjunctionBody block={block} /> :
+      block.type === CONDITIONAL ? <ConditionalBody block={block} /> :
+      block.type === COMPARISON ? <ComparisonBody block={block} /> :
+      block.type === ACTION ? <ActionBody block={block} /> :
+      <div>This should not be showing up</div>}
     </div>
   );
 };

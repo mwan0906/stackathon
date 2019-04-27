@@ -1,12 +1,12 @@
 import React from 'react';
 
-const PlusBody = props => {
+const EqualBody = props => {
   return (
     <div>
       <span className="blank" id={`${props.id}-0`}>
         NUMBER
       </span>
-      <b> plus </b>
+      <b> equals </b>
       <span className="blank" id={`${props.id}-1`}>
         NUMBER
       </span>
@@ -14,13 +14,13 @@ const PlusBody = props => {
   );
 };
 
-const MinusBody = props => {
+const NotEqualBody = props => {
   return (
     <div>
       <span className="blank" id={`${props.id}-0`}>
         NUMBER
       </span>
-      <b> minus </b>
+      <b> does not equal </b>
       <span className="blank" id={`${props.id}-1`}>
         NUMBER
       </span>
@@ -28,13 +28,13 @@ const MinusBody = props => {
   );
 };
 
-const MultBody = props => {
+const GreaterBody = props => {
   return (
     <div>
       <span className="blank" id={`${props.id}-0`}>
         NUMBER
       </span>
-      <b> times </b>
+      <b> is greater than </b>
       <span className="blank" id={`${props.id}-1`}>
         NUMBER
       </span>
@@ -42,13 +42,13 @@ const MultBody = props => {
   );
 };
 
-const DivBody = props => {
+const LessBody = props => {
   return (
     <div>
       <span className="blank" id={`${props.id}-0`}>
         NUMBER
       </span>
-      <b> divided by </b>
+      <b> is less than </b>
       <span className="blank" id={`${props.id}-1`}>
         NUMBER
       </span>
@@ -58,14 +58,14 @@ const DivBody = props => {
 
 export default props => {
   switch (props.block.subType) {
-    case 'PLUS':
-      return <PlusBody {...props.block} />;
-    case 'MINUS':
-      return <MinusBody {...props.block} />;
-    case 'MULTIPLY':
-      return <MultBody {...props.block} />;
-    case 'DIVIDE':
-      return <DivBody {...props.block} />;
+    case 'EQUAL':
+      return <EqualBody {...props.block} />;
+    case 'NOT-EQUAL':
+      return <NotEqualBody {...props.block} />;
+    case 'GREATER-THAN':
+      return <GreaterBody {...props.block} />;
+    case 'LESS-THAN':
+      return <LessBody {...props.block} />;
   }
   return <div>Oh god what happened</div>
 };

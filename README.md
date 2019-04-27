@@ -24,23 +24,8 @@ The rules of this Blackjack variation are as followed:
 Once a bot is unleashed, there can be no modifications made to its behavior mid-game. Once a game has ended, then the user may tinker with the logic, but at the cost of completely wipng its score history.
 
 # TODO
-* Make logical statements necessary for Blackjack-playing intelligences
-* * If
-* * Then
-* * Else
-* Actions:
-* * Hit
-* * Stand
-* Conjunctions:
-* * And
-* * Or
-* Comparisons:
-* * ===
-* * < / >
-* * !==
-* Math:
-* * x + - /
-* * Random
+* Let logic blocks be nested
+* Have logic blocks be read and submitted
 
 * How it will work:
 - User can press buttons on the side to add a block to the working area
