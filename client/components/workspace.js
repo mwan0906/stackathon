@@ -1,39 +1,64 @@
-/* import React from 'react';
+import React from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { IfBlock, MarioBlock } from './blocks'
+import { connect } from 'react-redux';
+import Block from './blocks';
+import {
+  selectMaker,
+  moveBlock
+} from '../store/work/actioncreators';
 
-const initialWorkspace = {
-  blockIds: ['0']
-};
-
-export default class Workspace extends React.Component {
+class Workspace extends React.Component {
   constructor() {
     super();
-    this.state = initialWorkspace;
-    this.onDragEnd = this.onDragEnd.bind(this);
   }
 
-  onDragEnd(result) {
-    console.log('result:', result);
+  componentDidMount() {
+    document
+      .getElementsByClassName('workspace')[0]
+      .addEventListener('click', e => this.props.selectNode(e.target));
   }
 
   render() {
     return (
-      <div id="workspace">
-        <h1>Work Here!</h1>
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          <Droppable droppableId="workspace">
+      <DragDropContext onDragEnd={this.props.onDragEnd}>
+        <div className="workspace">
+          <h1>WORKSPACE</h1>
+          <Droppable droppableId="work">
             {provided => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
-                <IfBlock />
-                <MarioBlock />
+                {this.props.blockOrder.map((blockId, index) => (
+                  <Block
+                    key={blockId}
+                    blockId={blockId}
+                    index={index}
+                    topLevel={true}
+                  />
+                ))}
                 {provided.placeholder}
               </div>
             )}
           </Droppable>
-        </DragDropContext>
-      </div>
+        </div>
+      </DragDropContext>
     );
   }
 }
- */
+
+const mapStateToProps = state => {
+  return {
+    availableBlockTypes: state.work.availableBlockTypes,
+    blockOrder: state.work.blockOrder
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    selectNode: e => dispatch(selectMaker(e)),
+    onDragEnd: result => dispatch(moveBlock(result))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Workspace);

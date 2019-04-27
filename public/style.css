@@ -4,6 +4,10 @@ body {
   background-size: cover;
 }
 
+h3 {
+  margin: 5px;
+}
+
 .cardspread {
   display: flex;
   align-content: center;
@@ -48,11 +52,14 @@ div {
   background-color: lightpink;
 }
 
-#workspace {
+#menu {
+  display: flex;
+}
+.workspace {
   height: 80vh;
   overflow: auto;
 }
-#workspace, #workspace div {
+.workspace, .workspace div {
   background-color: black;
   color: greenyellow;
 }
@@ -61,6 +68,16 @@ div {
   color: gray;
   padding: 5px;
 }
+.block {
+  outline: 1px solid white;
+}
+.MATH.block, .MATH.block div:not(.block) {
+  background-color: red;
+  color: white;
+}
 .selected {
   outline: 4px dotted red;
+}
+.blank.selected {
+  outline: 4px dotted white;
 }

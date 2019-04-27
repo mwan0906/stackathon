@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
 import {
   ACTION,
@@ -8,32 +9,51 @@ import {
   MATH
 } from '../store/work/blocktypes';
 
+import MathBody from './blocks-math'
+
 const Block = props => {
-  const block = props.block;
-  return (
-    <Draggable draggableId={block.id} index={props.index}>
-      {provided => (
-        <div {...provided.draggableProps} ref={provided.innerRef} id={block.id}>
-          <b {...provided.dragHandleProps}>
-            {block.content}
-            {block.id}
-          </b>
-          {block.type === ACTION && <ActionBlock block={block} />}
-        </div>
-      )}
-    </Draggable>
-  );
+  if (props.topLevel) {
+    return (
+      <Draggable draggableId={props.blockId} index={props.index}>
+        {provided => (
+          <div
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            <InnerBlock blockId={props.blockId} />
+          </div>
+        )}
+      </Draggable>
+    );
+  } else {
+    return (
+      <div>
+        <InnerBlock blockId={props.blockId} />
+      </div>
+    );
+  }
 };
 
-const ActionBlock = props => {
+const DisconnectedInnerBlock = props => {
   const block = props.block;
   return (
-    <div className={ACTION}>
-      Hit or Miss
-      {block.children[0] || <span className="blank">?????</span>}
-      Guess They Never Miss Huh
+    <div className={`${block.type} block`} id={props.blockId}>
+      <h3>
+        {block.subType}
+      </h3>
+      {block.type === MATH ? <MathBody block={block} /> :
+      <div>what is even going on</div>}
     </div>
   );
 };
+
+const mapStateToProps = (state, otherProps) => {
+  return {
+    block: state.work.currentBlocks[otherProps.blockId]
+  };
+};
+
+const InnerBlock = connect(mapStateToProps)(DisconnectedInnerBlock);
 
 export default Block;

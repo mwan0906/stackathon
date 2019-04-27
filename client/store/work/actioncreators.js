@@ -7,10 +7,11 @@ export const selectMaker = node => {
   };
 };
 
-export const newBlockMaker = blockType => {
+export const newBlockMaker = (blockType, blockSubType) => {
   return {
     type: NEW_BLOCK,
-    blockType
+    blockType,
+    blockSubType
   };
 };
 

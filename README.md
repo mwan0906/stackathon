@@ -24,7 +24,6 @@ The rules of this Blackjack variation are as followed:
 Once a bot is unleashed, there can be no modifications made to its behavior mid-game. Once a game has ended, then the user may tinker with the logic, but at the cost of completely wipng its score history.
 
 # TODO
-* Make buttons to spawn divs of specific types, which can then be dragged and dropped
 * Make logical statements necessary for Blackjack-playing intelligences
 * * If
 * * Then
