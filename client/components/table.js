@@ -22,8 +22,8 @@ const table = props => {
 
 const mapStateToProps = state => {
   return {
-    cards: state.cardHands,
-    phase: state.game.phase
+    cards: state.play.cardHands,
+    phase: state.play.game.phase
   };
 };
 

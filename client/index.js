@@ -50,7 +50,7 @@ const ConnectedApp = connect(null, mapDispatchToProps)(App);
 
 ReactDOM.render(
   <Provider store={store}>
-    <NewApp />
+    <ConnectedApp />
   </Provider>,
   document.getElementById('app')
 );

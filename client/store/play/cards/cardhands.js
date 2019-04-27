@@ -1,4 +1,4 @@
-import { UPDATE_DECK, NEW_HAND, HIT } from './actiontypes';
+import { UPDATE_DECK, NEW_HAND, HIT } from '../actiontypes';
 
 const initialState = {
   self: [],

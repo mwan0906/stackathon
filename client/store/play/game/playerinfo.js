@@ -1,5 +1,5 @@
-import { HIT, STAND } from './actiontypes';
-import { calcValue } from './actioncreators'
+import { HIT, STAND } from '../actiontypes';
+import { calcValue } from '../actioncreators'
 
 const random = odds => odds > Math.random();
 

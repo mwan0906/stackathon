@@ -23,10 +23,10 @@ const ui = props => {
 
 const mapStateToProps = state => {
   return {
-    id: state.deck.id,
-    players: state.players,
-    phase: state.game.phase,
-    round: state.game.round
+    id: state.play.deck.id,
+    players: state.play.players,
+    phase: state.play.game.phase,
+    round: state.play.game.round
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { UPDATE_DECK, HIT, NEW_HAND, CALC_SCORE, STAND } from './actiontypes';
+import {
+  UPDATE_DECK,
+  HIT,
+  NEW_HAND,
+  CALC_SCORE,
+  STAND,
+  REVEAL
+} from './actiontypes';
 
 const deckSetter = deck => ({
   type: UPDATE_DECK,
@@ -28,9 +35,9 @@ const newOrDrawSetter = (cards, pile, type) => ({
 export const getCards = (pile, type) => {
   return async (dispatch, getState) => {
     try {
-      const { deck } = await getState();
+      const { play } = await getState();
       const { data } = await axios.get(
-        `https://deckofcardsapi.com/api/deck/${deck.id}/draw/?count=${
+        `https://deckofcardsapi.com/api/deck/${play.deck.id}/draw/?count=${
           type === 'new' ? 2 : 1
         }`
       );
@@ -89,7 +96,8 @@ export const calcValue = cards => {
 export const calcScores = () => {
   return async (dispatch, getState) => {
     try {
-      const { cardHands } = await getState();
+      const { play } = await getState();
+      const { cardHands } = play;
 
       const sums = {};
       Object.keys(cardHands).forEach(
@@ -117,10 +125,16 @@ const standCreator = pile => ({
   pile
 });
 
+const reveal = cards => ({
+  type: REVEAL,
+  cards
+});
+
 export const makeMove = () => {
   return async (dispatch, getState) => {
     try {
-      const { players, cardHands, deck } = await getState();
+      const { play } = await getState();
+      const { players, cardHands, deck } = play;
       let hitPlayers = 0;
       Object.keys(players).forEach(player => {
         if (
@@ -148,6 +162,13 @@ export const makeMove = () => {
         }
       });
       if (!hitPlayers) {
+        dispatch(
+          reveal([
+            ...cardHands.opp1.slice(1),
+            ...cardHands.opp2.slice(1),
+            ...cardHands.opp3.slice(1)
+          ])
+        );
         dispatch(calcScores());
       }
     } catch (err) {

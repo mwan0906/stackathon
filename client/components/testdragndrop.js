@@ -2,19 +2,14 @@ import React from 'react';
 import Column from './testcolumn';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-let numTasks = 4;
+let numTasks = 0;
 
 const initialData = {
-  tasks: {
-    'task-1': { id: 'task-1', content: 'do this 1', children: [] },
-    'task-2': { id: 'task-2', content: 'do this 2', children: [] },
-    'task-3': { id: 'task-3', content: 'do this 3', children: [] },
-    'task-4': { id: 'task-4', content: 'do this 4', children: [] }
-  },
+  tasks: {},
   workspace: {
     id: 'column-1',
     title: 'WORKSPACE',
-    taskIds: ['task-1', 'task-2', 'task-3', 'task-4']
+    taskIds: []
   }
 };
 
@@ -31,14 +26,13 @@ export default class NewApp extends React.Component {
   }
 
   componentDidMount() {
-    document
-      .getElementById('workspace')
-      .addEventListener('click', e => {
-        const selectedNode = document.querySelector('.selected');
-        if (selectedNode) selectedNode.classList.remove('selected')
-        const clickedNode = e.target;
-        if (clickedNode.classList.contains('blank')) clickedNode.classList.add('selected');
-      });
+    document.getElementById('workspace').addEventListener('click', e => {
+      const selectedNode = document.querySelector('.selected');
+      if (selectedNode) selectedNode.classList.remove('selected');
+      const clickedNode = e.target;
+      if (clickedNode.classList.contains('blank'))
+        clickedNode.classList.add('selected');
+    });
   }
 
   reset() {
@@ -46,7 +40,9 @@ export default class NewApp extends React.Component {
   }
 
   display() {
-    console.log(this.state.workspace.taskIds)
+    this.state.workspace.taskIds.forEach(task =>
+      console.log(this.state.tasks[task])
+    );
   }
 
   newBlock() {
@@ -56,8 +52,7 @@ export default class NewApp extends React.Component {
         ...this.state.tasks,
         [newTaskId]: {
           id: newTaskId,
-          content: 'AAAAAAAAAAAAAAAAAAAAAAAAAA',
-          children: []
+          content: 'AAAAAAAAAAAAAAAAAAAAAAAAAA'
         }
       },
       workspace: {
@@ -77,8 +72,6 @@ export default class NewApp extends React.Component {
   }
 
   onDragEnd(result) {
-    console.log('result:', result);
-
     const { destination, source, draggableId } = result;
     if (destination && destination.index !== source.index) {
       const newWorkspace = { ...this.state.workspace };
@@ -97,9 +90,8 @@ export default class NewApp extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <div id="workspace">
+      <React.Fragment>
         <button type="button" onClick={this.reset}>
           Reset
         </button>
@@ -109,20 +101,22 @@ export default class NewApp extends React.Component {
         <button type="button" onClick={this.newBlock}>
           Make New Block
         </button>
-        <DragDropContext
-          onDragStart={this.onDragStart}
-          onDragUpdate={this.onDragUpdate}
-          onDragEnd={this.onDragEnd}
-        >
-          <Column
-            key="column-1"
-            column={this.state.workspace}
-            tasks={this.state.workspace.taskIds.map(
-              taskId => this.state.tasks[taskId]
-            )}
-          />
-        </DragDropContext>
-      </div>
+        <div id="workspace">
+          <DragDropContext
+            onDragStart={this.onDragStart}
+            onDragUpdate={this.onDragUpdate}
+            onDragEnd={this.onDragEnd}
+          >
+            <Column
+              key="column-1"
+              column={this.state.workspace}
+              tasks={this.state.workspace.taskIds.map(
+                taskId => this.state.tasks[taskId]
+              )}
+            />
+          </DragDropContext>
+        </div>
+      </React.Fragment>
     );
   }
 }

@@ -1,4 +1,4 @@
-import { UPDATE_DECK, NEW_HAND, CALC_SCORE } from './actiontypes';
+import { UPDATE_DECK, NEW_HAND, CALC_SCORE, REVEAL } from '../actiontypes';
 
 const initialState = {
   phase: 'start',
@@ -25,7 +25,9 @@ export default (state = initialState, action) => {
       Object.keys(action.scores).forEach(player => {
         newScores[player] += action.scores[player];
       });
-      return { ...state, phase: 'show', scores: newScores };
+      return { ...state, scores: newScores };
+    case REVEAL:
+      return {...state, phase: 'show'};
     default:
       return state;
   }
