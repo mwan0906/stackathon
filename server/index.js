@@ -2,7 +2,7 @@ var express = require('express');
 const path = require('path');
 const app = express();
 
-var server = app.listen(3000, ()=> {
+var server = app.listen(process.env.PORT || 3000, ()=> {
     console.log('listening')
 })
 
