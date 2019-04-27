@@ -1,11 +1,6 @@
 //import { combineReducers } from 'redux';
 import { SELECT, NEW_BLOCK, DELETE_BLOCK, MOVE_BLOCK } from './actiontypes';
-
-const ACTION = 'ACTION';
-const CONDITIONAL = 'CONDITIONAL';
-const COMPARISON = 'COMPARISON';
-const VALUE = 'VALUE';
-const MATH = 'MATH';
+import { ACTION, CONDITIONAL, COMPARISON, VALUE, MATH } from './blocktypes';
 
 const blocksAccepted = {
   ACTION: [],
@@ -28,13 +23,16 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case NEW_BLOCK:
-      const newBlockId = `block-${++numBlocks}`;
-      const newBlock = { id: newBlockId, content: 'AAAAAAAAAAAAAAA' };
+      console.log(action);
+      console.log('selectedId:', state.selectedId);
+      const newBlockId = `${state.selectedId}block${numBlocks++}`;
+      const newBlock = { id: newBlockId, type: action.blockType, content: 'AAAAAAAAAAAAAAA', children: [] };
       return {
         ...state,
         currentBlocks: { ...state.currentBlocks, [newBlockId]: newBlock },
         blockOrder: [...state.blockOrder, newBlockId]
       };
+
     case MOVE_BLOCK:
       if (
         action.destination &&
@@ -52,7 +50,7 @@ const reducer = (state = initialState, action) => {
       if (selectedNode) selectedNode.classList.remove('selected');
       const clickedNode = action.node;
       let newSelectedId = '';
-      if (clickedNode.classList.contains('blank')) {
+      if (clickedNode.classList && clickedNode.classList.contains('blank')) {
         newSelectedId = clickedNode.parentNode.parentNode.id;
         clickedNode.classList.add('selected');
       }

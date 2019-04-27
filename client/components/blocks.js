@@ -1,7 +1,12 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-
-let numBlocks = 0;
+import {
+  ACTION,
+  CONDITIONAL,
+  COMPARISON,
+  VALUE,
+  MATH
+} from '../store/work/blocktypes';
 
 const Block = props => {
   const block = props.block;
@@ -13,19 +18,22 @@ const Block = props => {
             {block.content}
             {block.id}
           </b>
-          <div>
-            fjkskhes s hskjs
-            <span className="blank">CLICK HERE TO DO A THING</span> gshhk gf
-            khgd h jkfd khgkdgjherkgher
-          </div>
+          {block.type === ACTION && <ActionBlock block={block} />}
         </div>
       )}
     </Draggable>
   );
 };
 
-const IfBlock = props => {
-  return <Block />
-}
+const ActionBlock = props => {
+  const block = props.block;
+  return (
+    <div className={ACTION}>
+      Hit or Miss
+      {block.children[0] || <span className="blank">?????</span>}
+      Guess They Never Miss Huh
+    </div>
+  );
+};
 
 export default Block;
