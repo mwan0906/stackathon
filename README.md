@@ -21,9 +21,6 @@ The rules of this Blackjack variation are as followed:
 
 Once a bot is unleashed, there can be no modifications made to its behavior mid-game. Once a game has ended, then the user may tinker with the logic, but at the cost of completely wipng its score history.
 
-# TODO
-* Be able to switch between build mode and game mode
-
 # How To Build
 - User can press buttons on the side to add a block to the working area
 - Uppermost level blocks can be rearranged by dragging and dropping

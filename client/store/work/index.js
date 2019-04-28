@@ -1,5 +1,5 @@
 //import { combineReducers } from 'redux';
-import { SELECT, NEW_BLOCK, DELETE_BLOCK, MOVE_BLOCK } from './actiontypes';
+import { SELECT, NEW_BLOCK, DELETE_BLOCK, MOVE_BLOCK, REJECT_SUBMIT } from './actiontypes';
 import {
   ACTION,
   CONDITIONAL,
@@ -40,7 +40,8 @@ const initialState = {
   selectedBlankId: '',
   availableBlockTypes: [ACTION, CONDITIONAL],
   currentBlocks: {},
-  blockOrder: []
+  blockOrder: [],
+  err: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -65,6 +66,7 @@ const reducer = (state = initialState, action) => {
         newParent.children = newSiblings;
         return {
           ...state,
+          err: false,
           currentBlocks: {
             ...state.currentBlocks,
             [newBlock.id]: newBlock,
@@ -77,6 +79,7 @@ const reducer = (state = initialState, action) => {
         newBlock.id = `-block${numBlocks++}`;
         return {
           ...state,
+          err: false,
           currentBlocks: { ...state.currentBlocks, [newBlock.id]: newBlock },
           blockOrder: [...state.blockOrder, newBlock.id]
         };
@@ -89,7 +92,7 @@ const reducer = (state = initialState, action) => {
       ) {
         newBlockOrder.splice(action.source.index, 1);
         newBlockOrder.splice(action.destination.index, 0, action.draggableId);
-        return { ...state, blockOrder: newBlockOrder };
+        return { ...state, err: false, blockOrder: newBlockOrder };
       }
       return state;
 
@@ -134,6 +137,7 @@ const reducer = (state = initialState, action) => {
 
       return {
         ...state,
+        err: false,
         selectedBlockId: newSelectedBlockId,
         selectedBlankId: newSelectedBlankId,
         availableBlockTypes: newAvailableBlockTypes
@@ -168,12 +172,15 @@ const reducer = (state = initialState, action) => {
 
       return {
         ...state,
+        err: false,
         currentBlocks: newBlocks,
         blockOrder: newBlockOrder,
         selectedBlockId: '',
         availableBlockTypes: blocksAccepted.DEFAULT
       }
 
+    case REJECT_SUBMIT:
+      return {...state, err: true};
     default:
       return state;
   }

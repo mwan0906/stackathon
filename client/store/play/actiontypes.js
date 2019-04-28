@@ -5,3 +5,4 @@ export const STAND = 'STAND';
 export const CALC_SCORE = 'CALC_SCORE';
 export const REVEAL = 'REVEAL';
 export const CHANGE_LOGIC = 'CHANGE_LOGIC';
+export const END_GAME = 'END_GAME';

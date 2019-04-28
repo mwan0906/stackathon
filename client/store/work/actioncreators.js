@@ -1,25 +1,25 @@
-import { SELECT, NEW_BLOCK, DELETE_BLOCK, MOVE_BLOCK } from './actiontypes';
+import {
+  SELECT,
+  NEW_BLOCK,
+  DELETE_BLOCK,
+  MOVE_BLOCK,
+  REJECT_SUBMIT
+} from './actiontypes';
 
-export const selectMaker = node => {
-  return {
-    type: SELECT,
-    node
-  };
-};
+export const selectMaker = node => ({
+  type: SELECT,
+  node
+});
 
-export const newBlockMaker = (blockType, blockSubType) => {
-  return {
-    type: NEW_BLOCK,
-    blockType,
-    blockSubType
-  };
-};
+export const newBlockMaker = (blockType, blockSubType) => ({
+  type: NEW_BLOCK,
+  blockType,
+  blockSubType
+});
 
-export const deleteBlock = () => {
-  return {
-    type: DELETE_BLOCK
-  }
-}
+export const deleteBlock = () => ({
+  type: DELETE_BLOCK
+});
 
 export const moveBlock = result => {
   const { destination, source, draggableId } = result;
@@ -30,3 +30,7 @@ export const moveBlock = result => {
     draggableId
   };
 };
+
+export const rejectSubmit = () => ({
+  type: REJECT_SUBMIT
+});

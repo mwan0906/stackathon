@@ -2,10 +2,19 @@ body {
   background: url('32281196-green-casino-table-background.jpg') no-repeat center
     fixed;
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+#app {
+  justify-self: center;
 }
 
 h1 {
   text-align: center;
+}
+h2 {
+  margin: 5px;
 }
 h3 {
   margin: 5px;
@@ -34,12 +43,19 @@ input, select {
 #centercolumn .card {
   margin-top: 0px;
   margin-bottom: 0px;
-  margin-right: -90px;
+  margin-right: -50px;
+  margin-left: -40px;
+}
+
+#scoreboard {
+  background-color: white;
+  text-align: center;
 }
 
 #center {
   display: flex;
   height: 50vh;
+  width: 50vw;
 }
 #center > .cardspread {
   flex-flow: column;
@@ -67,6 +83,7 @@ div {
 }
 .workspace {
   height: 80vh;
+  width: 95vw;
   overflow: auto;
 }
 .workspace, .workspace div {
@@ -156,6 +173,12 @@ div {
   background-color: red;
   color: black;
   font-size: 36px;
+}
+
+#err {
+  text-align: center;
+  background-color: white;
+  color: red;
 }
 
 .workspace .block.selected, .block.selected div {

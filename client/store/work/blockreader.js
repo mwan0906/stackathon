@@ -38,6 +38,9 @@ const parseBlock = (b, context) => {
     case 'HAND':
       toReturn += ' handValue ';
       break;
+    case 'NO-ACES':
+      toReturn += ' withoutAces ';
+      break;
     case 'NUMBER-IN':
       const suit = document.getElementById(`${block.id}-0`).value;
       let singularSuit;
@@ -132,10 +135,10 @@ const parseBlock = (b, context) => {
       break;
 
     case 'HIT':
-      toReturn += " 'hit';";
+      toReturn += " return 'hit'; ";
       break;
     case 'STAND':
-      toReturn += " 'stand';";
+      toReturn += " return 'stand'; ";
       break;
   }
   return toReturn;

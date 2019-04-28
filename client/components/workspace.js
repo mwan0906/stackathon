@@ -5,7 +5,7 @@ import Block from './blocks';
 import {
   selectMaker,
   moveBlock
-} from '../store/work/actioncreators';
+} from '../store';
 
 class Workspace extends React.Component {
   constructor() {

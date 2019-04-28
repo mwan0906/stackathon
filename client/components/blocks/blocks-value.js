@@ -9,6 +9,14 @@ const NumberBody = props => {
   );
 };
 
+const NoAcesBody = props => {
+  return (
+    <div>
+      <span id={`${props.id}-0`}><b>The Value of My Current Hand, Not Counting Aces</b></span>
+    </div>
+  )
+}
+
 const HandBody = props => {
   return (
     <div>
@@ -79,6 +87,8 @@ export default props => {
       return <NumberBody {...props.block} />;
     case 'HAND':
       return <HandBody {...props.block} />;
+    case 'NO-ACES':
+      return <NoAcesBody {...props.block} />;
     case 'NUMBER-IN':
       return <NumberInBody {...props.block} />;
     case 'RANDOM':

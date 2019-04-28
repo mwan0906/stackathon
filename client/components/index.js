@@ -17,41 +17,61 @@ class DisconnectedPlay extends React.Component {
 
   render() {
     return (
-      <div id="center">
-        <Table player="opp1" />
-        <div id="centercolumn">
-          <Table player="opp2" />
-          <UI />
-          <Table player="self" />
+      <React.Fragment>
+        <div id="center">
+          <Table player="opp1" />
+          <div id="centercolumn">
+            <Table player="opp2" />
+            <UI />
+            <Table player="self" />
+          </div>
+          <Table player="opp3" />
         </div>
-        <Table player="opp3" />
-      </div>
+        <div id="scoreboard">
+          <h2>SCORES:</h2>
+          <h3>You: {this.props.scores.self}</h3>
+          <h3>Antsy Ally: {this.props.scores.opp1}</h3>
+          <h3>Betting Billie: {this.props.scores.opp2}</h3>
+          <h3>Carrie Careless: {this.props.scores.opp3}</h3>
+        </div>
+      </React.Fragment>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    scores: state.play.game.scores,
+    phase: state.play.game.phase
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
     startNewGame: () => dispatch(startNewGame())
   };
 };
 
-export const Play = connect(
-  null,
+const Play = connect(
+  mapStateToProps,
   mapDispatchToProps
 )(DisconnectedPlay);
 
-export class Work extends React.Component {
-  constructor() {
-    super();
-  }
+const Work = () => {
+  return (
+    <React.Fragment>
+      <Workspace />
+      <Menu />
+    </React.Fragment>
+  );
+};
 
-  render() {
-    return (
-      <React.Fragment>
-        <Workspace />
-        <Menu />
-      </React.Fragment>
-    );
-  }
-}
+const App = props => {
+  if (props.phase === 'working') return <Work />;
+  return <Play />;
+};
+const mapStateToAppProps = state => {
+  return {
+    phase: state.play.game.phase
+  };
+};
+export default connect(mapStateToAppProps)(App);

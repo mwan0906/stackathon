@@ -18,3 +18,4 @@ const store = createStore(reducer, middleware);
 
 export default store;
 export * from './play/actioncreators';
+export * from './work/actioncreators';

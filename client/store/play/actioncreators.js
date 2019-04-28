@@ -6,7 +6,8 @@ import {
   CALC_SCORE,
   STAND,
   REVEAL,
-  CHANGE_LOGIC
+  CHANGE_LOGIC,
+  END_GAME
 } from './actiontypes';
 
 const deckSetter = deck => ({
@@ -52,7 +53,10 @@ export const getCards = (pile, type) => {
 export const startNewGame = () => {
   return async dispatch => {
     try {
-      await dispatch(newDeckGetter()).then(() => dispatch(startNewRound()));
+      await dispatch(newDeckGetter()).then(() => {
+        setTimeout(() => dispatch(makeMove()), 2500);
+        dispatch(startNewRound());
+      });
     } catch (err) {
       console.error(err);
     }
@@ -136,8 +140,16 @@ export const makeMove = () => {
   return async (dispatch, getState) => {
     try {
       const { play } = await getState();
-      const { players, cardHands, deck } = play;
+      const { players, cardHands, deck, game } = play;
       let hitPlayers = 0;
+      if (game.phase === 'show') {
+        if (game.round !== 3) {
+          setTimeout(() => dispatch(makeMove()), 2000);
+          dispatch(startNewRound());
+        }
+        return;
+      }
+      setTimeout(() => dispatch(makeMove()), 1500);
       Object.keys(players).forEach(player => {
         const hand = cardHands[player];
         const { handValue, withoutAces } = calcValue(hand);
@@ -151,7 +163,22 @@ export const makeMove = () => {
               otherCards.push(cardHands[otherPlayer][0]);
           });
 
-          const result = eval(rawLogic);
+          //calculating the result as an IIFE
+          const result = eval(
+            '((hand, handValue, withoutAces, unaccountedFor, otherCards) => {' +
+              rawLogic +
+              '})(hand, handValue, withoutAces, unaccountedFor, otherCards)'
+          );
+          if (player === 'self') {
+            eval(
+              '((hand, handValue, withoutAces, unaccountedFor, otherCards) => {' +
+                `console.log('hand:', hand);
+                console.log('handValue:', handValue);
+                console.log('withoutAces:', withoutAces);` +
+                '})(hand, handValue, withoutAces, unaccountedFor, otherCards)'
+            );
+            console.log('therefore,', result);
+          }
           if (result === 'hit') {
             hitPlayers++;
             dispatch(getCards(player, 'draw'));
@@ -174,9 +201,15 @@ export const makeMove = () => {
   };
 };
 
-const logicChanger = newLogic => {
+export const logicChanger = newLogic => {
   return {
     type: CHANGE_LOGIC,
     newLogic
+  };
+};
+
+export const endGame = () => {
+  return {
+    type: END_GAME
   };
 };
