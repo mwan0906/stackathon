@@ -24,7 +24,7 @@ Once a bot is unleashed, there can be no modifications made to its behavior mid-
 # TODO
 * Have logic blocks be read and submitted
 
-#How To Build
+# How To Build
 - User can press buttons on the side to add a block to the working area
 - Uppermost level blocks can be rearranged by dragging and dropping
 - Clicking in a block's empty fields lets you put more blocks within that block
