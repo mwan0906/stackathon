@@ -77,21 +77,22 @@ const scoreSetter = scores => ({
 });
 
 export const calcValue = cards => {
-  let total = 0;
+  let handValue = 0;
   let aces = 0;
   cards.forEach(card => {
     let value = parseInt(card.value);
     if (isNaN(value)) {
       if (card.value === 'ACE') aces++;
-      else total += 10;
-    } else total += value;
+      else handValue += 10;
+    } else handValue += value;
   });
+  let withoutAces = handValue;
   while (aces) {
-    if (total < 11) total += 11;
-    else total++;
+    if (handValue < 11) handValue += 11;
+    else handValue++;
     aces--;
   }
-  return total;
+  return { handValue, withoutAces };
 };
 
 export const calcScores = () => {
@@ -102,7 +103,7 @@ export const calcScores = () => {
 
       const sums = {};
       Object.keys(cardHands).forEach(
-        hand => (sums[hand] = calcValue(cardHands[hand]))
+        hand => (sums[hand] = calcValue(cardHands[hand]).handValue)
       );
       const maxValue = Math.max(...Object.values(sums).filter(sum => sum < 22));
       const minValue = Math.min(...Object.values(sums));
@@ -138,27 +139,19 @@ export const makeMove = () => {
       const { players, cardHands, deck } = play;
       let hitPlayers = 0;
       Object.keys(players).forEach(player => {
-        const handValue = calcValue(cardHands[player]);
-        if (
-          players[player].history[0] !== 'STAND' &&
-          handValue < 21
-        ) {
-          const { rawLogic, logic } = players[player];
+        const hand = cardHands[player];
+        const { handValue, withoutAces } = calcValue(hand);
+        if (players[player].history[0] !== 'STAND' && handValue < 21) {
+          const { rawLogic } = players[player];
+          const { unaccountedFor } = deck;
 
-          const toGiveToFunction = {
-            deck,
-            rawLogic,
-            hand: cardHands[player],
-            otherCards: [],
-            handValue
-          };
-
+          let otherCards = [];
           Object.keys(players).forEach(otherPlayer => {
             if (otherPlayer !== player)
-              toGiveToFunction.otherCards.push(cardHands[otherPlayer][0]);
+              otherCards.push(cardHands[otherPlayer][0]);
           });
 
-          const result = logic(toGiveToFunction);
+          const result = eval(rawLogic);
           if (result === 'hit') {
             hitPlayers++;
             dispatch(getCards(player, 'draw'));

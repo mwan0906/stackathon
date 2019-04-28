@@ -4,33 +4,19 @@ const random = odds => odds > Math.random();
 
 const intialState = {
   opp1: {
-    rawLogic: '',
-    logic: () => {
-      return 'stand';
-    },
+    rawLogic: `'stand';`,
     history: []
   },
   opp2: {
-    rawLogic: '',
-    logic: () => {
-      return random(5 / 6) ? 'hit' : 'stand';
-    },
+    rawLogic: `if ((( Math.floor(Math.random() * 6) + 1) < (6))) { 'hit';} 'stand';`,
     history: []
   },
   opp3: {
-    rawLogic: '',
-    logic: () => {
-      return 'hit';
-    },
+    rawLogic: `'hit';`,
     history: []
   },
   self: {
-    rawLogic: `if (( hand.filter(card => card.value == 'ACE').length >0)) { 'hit';}if (( handValue >16)) { 'stand';} 'hit';`,
-    logic: info => {
-      const { deck, hand, handValue, otherCards, rawLogic } = info;
-      const { seen, unaccountedFor } = deck;
-      return eval(rawLogic) || 'hit';
-    },
+    rawLogic: `if (( hand.filter(card => card.value == 'ACE').length >0)) { 'hit';}else {if (( handValue >16)) { 'stand';} else {'hit';}}`,
     history: []
   }
 };

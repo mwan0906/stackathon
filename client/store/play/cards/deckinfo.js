@@ -10,12 +10,10 @@ const deckInitializer = val => {
 
 const initialState = {
   id: '',
-  seen: deckInitializer(0),
   unaccountedFor: deckInitializer(4)
 };
 
 export default (state = initialState, action) => {
-  const newSeen = { ...state.seen };
   const newUnaccountedFor = { ...state.unaccountedFor };
   switch (action.type) {
     case UPDATE_DECK:
@@ -23,22 +21,19 @@ export default (state = initialState, action) => {
     case NEW_HAND:
       if (action.pile !== 'self') {
         newUnaccountedFor[action.cards[0].value]--;
-        newSeen[action.cards[0].value]++;
       };
     case HIT:
       if (action.pile === 'self') {
         action.cards.forEach(card => {
           newUnaccountedFor[card.value]--;
-          newSeen[card.value]++;
         });
       }
-      return { ...state, seen: newSeen, unaccountedFor: newUnaccountedFor };
+      return { ...state, unaccountedFor: newUnaccountedFor };
     case REVEAL:
       action.cards.forEach(card => {
         newUnaccountedFor[card.value]--;
-        newSeen[card.value]++;
       });
-      return { ...state, seen: newSeen, unaccountedFor: newUnaccountedFor };
+      return { ...state, unaccountedFor: newUnaccountedFor };
     default:
       return state;
   }

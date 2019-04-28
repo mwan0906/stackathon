@@ -71,8 +71,8 @@ const Menu = props => {
       }
       {allowed.includes(CONDITIONAL) &&
         <div id='conditional-buttons'>
-        <BlockButton type={CONDITIONAL} subType='IF-THEN' label='If __ Then __' />
-        <br />
+{/*         <BlockButton type={CONDITIONAL} subType='IF-THEN' label='If __ Then __' />
+        <br /> */}
         <BlockButton type={CONDITIONAL} subType='IF-THEN-ELSE' label='If __ Then __ Else __' />
         </div>
       }

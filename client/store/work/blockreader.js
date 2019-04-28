@@ -61,7 +61,7 @@ const parseBlock = (b, context) => {
       else if (place === 'The Deck')
         toReturn += ` unaccountedFor[\'${singularSuit}\'] `;
       else if (place === 'All Cards Seen So Far')
-        toReturn += ` seen[\'${singularSuit}\'] `;
+        toReturn += ` (4 - unaccountedFor[\'${singularSuit}\']) `;
       break;
     case 'RANDOM':
       toReturn += '( Math.floor(Math.random() * ';
