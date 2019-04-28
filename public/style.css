@@ -9,7 +9,10 @@ h3 {
 }
 
 input {
-  width: 40px;
+  width: 50px;
+}
+input, select {
+  font-size: 20px;
 }
 
 .cardspread {
@@ -72,6 +75,10 @@ div {
   background-color: white;
   color: gray;
   padding: 5px;
+}
+.block {
+  margin: 5px;
+  font-size: 20px;
 }
 
 #math-buttons button {
@@ -136,7 +143,8 @@ div {
 
 #menu button {
   text-align: center;
-  font-size: 18px;
+  font-size: 24px;
+  font-weight: bolder;
 }
 #menu > div {
   justify-content: center;

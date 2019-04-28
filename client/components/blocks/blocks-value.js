@@ -1,4 +1,5 @@
 import React from 'react';
+import ChildBlock from './childBlock';
 
 const NumberBody = props => {
   return (
@@ -11,7 +12,7 @@ const NumberBody = props => {
 const HandBody = props => {
   return (
     <div>
-      <span id={`${props.id}-0`}><b>The Value of the Current Hand</b></span>
+      <span id={`${props.id}-0`}><b>The Value of My Current Hand</b></span>
     </div>
   );
 };
@@ -21,20 +22,20 @@ const NumberInBody = props => {
     <div>
       <select id={`${props.id}-0`}>
         {[
-          'ACES',
-          'ONES',
-          'TWOS',
-          'THREES',
-          'FOURS',
-          'FIVES',
-          'SIXES',
-          'SEVENS',
-          'EIGHTS',
-          'NINES',
-          'TENS',
-          'JACKS',
-          'QUEENS',
-          'KINGS'
+          'Aces',
+          'Ones',
+          'Twos',
+          'Threes',
+          'Fours',
+          'Fives',
+          'Sixes',
+          'Sevens',
+          'Eights',
+          'Nines',
+          'Tens',
+          'Jacks',
+          'Queens',
+          'Kings'
         ].map(suit => (
           <option key={suit} value={suit}>{suit}</option>
         ))}
@@ -42,10 +43,10 @@ const NumberInBody = props => {
       <b> in </b>
       <select id={`${props.id}-1`}>
         {[
-          'MY HAND',
-          "OPPONENTS' VISIBLE HANDS",
-          'THE DECK',
-          'ALL CARDS SO FAR'
+          'My Hand',
+          "Opponent's Visible Cards",
+          'The Deck',
+          'All Cards Seen So Far'
         ].map(place => (
           <option key={place} value={place}>{place}</option>
         ))}
@@ -58,13 +59,17 @@ const RandomBody = props => {
   return (
     <div>
       <b>A Random Whole Number Between </b>
-      <span className="blank" id={`${props.id}-0`}>
-        NUMBER
-      </span>
+      <ChildBlock
+        seeking={`${props.id}-0`}
+        childId={props.children[0]}
+        type="NUMBER"
+      />
       <b> and </b>
-      <span className="blank" id={`${props.id}-1`}>
-        NUMBER
-      </span>
+      <ChildBlock
+        seeking={`${props.id}-1`}
+        childId={props.children[1]}
+        type="NUMBER"
+      />
     </div>
   );
 };

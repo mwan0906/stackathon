@@ -15,10 +15,9 @@ export const newBlockMaker = (blockType, blockSubType) => {
   };
 };
 
-export const deleteBlock = blockId => {
+export const deleteBlock = () => {
   return {
-    type: DELETE_BLOCK,
-    blockId
+    type: DELETE_BLOCK
   }
 }
 
