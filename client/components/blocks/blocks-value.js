@@ -4,7 +4,7 @@ import ChildBlock from './childBlock';
 const NumberBody = props => {
   return (
     <div>
-      <input type="number" id={`${props.id}-0`} placeholder="0" />
+      <input type="number" id={`${props.id}-0`} defaultValue="0" />
     </div>
   );
 };
@@ -23,7 +23,6 @@ const NumberInBody = props => {
       <select id={`${props.id}-0`}>
         {[
           'Aces',
-          'Ones',
           'Twos',
           'Threes',
           'Fours',

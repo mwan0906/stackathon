@@ -142,7 +142,6 @@ const reducer = (state = initialState, action) => {
     case DELETE_BLOCK:
       const blockToBeDeleted = state.selectedBlockId;
       const newBlocks = {...state.currentBlocks};
-      let newBlockOrder = [...state.blockOrder];
       let tbd = [ blockToBeDeleted ];
       let firstThrough = true;
 

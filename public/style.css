@@ -4,6 +4,9 @@ body {
   background-size: cover;
 }
 
+h1 {
+  text-align: center;
+}
 h3 {
   margin: 5px;
 }
@@ -71,12 +74,13 @@ div {
   color: white;
 }
 .blank {
-  background-color: white;
-  color: gray;
+  background-color: gray;
+  color: black;
   padding: 5px;
 }
 .block {
-  margin: 5px;
+  margin: 10px;
+  padding: 10px;
   font-size: 20px;
 }
 
@@ -146,12 +150,17 @@ div {
   font-weight: bolder;
 }
 #menu > div {
-  justify-content: center;
+  text-align: center;
+}
+#menu .del {
+  background-color: red;
+  color: black;
+  font-size: 36px;
 }
 
-.block.selected {
-  outline: 4px dotted white;
+.workspace .block.selected, .block.selected div {
+  background-color: #222222;
 }
 .blank.selected {
-  outline: 4px dotted white;
+  background-color: white;
 }

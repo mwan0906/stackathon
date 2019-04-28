@@ -7,7 +7,7 @@ import { Play, Work } from './components'
 
 ReactDOM.render(
   <Provider store={store}>
-    <Play />
+    <Work />
   </Provider>,
   document.getElementById('app')
 );

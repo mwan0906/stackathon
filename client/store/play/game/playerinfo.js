@@ -1,35 +1,35 @@
-import { HIT, STAND } from '../actiontypes';
-import { calcValue } from '../actioncreators'
+import { HIT, STAND, CHANGE_LOGIC } from '../actiontypes';
 
 const random = odds => odds > Math.random();
 
 const intialState = {
   opp1: {
+    rawLogic: '',
     logic: () => {
       return 'stand';
     },
     history: []
   },
   opp2: {
+    rawLogic: '',
     logic: () => {
       return random(5 / 6) ? 'hit' : 'stand';
     },
     history: []
   },
   opp3: {
+    rawLogic: '',
     logic: () => {
       return 'hit';
     },
     history: []
   },
   self: {
+    rawLogic: `if (( hand.filter(card => card.value == 'ACE').length >0)) { 'hit';}if (( handValue >16)) { 'stand';} 'hit';`,
     logic: info => {
-      console.log(info);
-      const { deck, hand, otherCards } = info;
+      const { deck, hand, handValue, otherCards, rawLogic } = info;
       const { seen, unaccountedFor } = deck;
-      const handValue = calcValue(hand);
-      if (handValue > 16) return 'stand'
-      return 'hit';
+      return eval(rawLogic) || 'hit';
     },
     history: []
   }
@@ -44,6 +44,8 @@ export default (state = intialState, action) => {
       newHistory.unshift(action.type);
       newPlayer.history = newHistory;
       return { ...state, [action.pile]: newPlayer };
+    case CHANGE_LOGIC:
+      return {...state, self: {...state.self, rawLogic: action.rawLogic}};
     default:
       return state;
   }

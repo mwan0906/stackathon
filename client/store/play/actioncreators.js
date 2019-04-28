@@ -5,7 +5,8 @@ import {
   NEW_HAND,
   CALC_SCORE,
   STAND,
-  REVEAL
+  REVEAL,
+  CHANGE_LOGIC
 } from './actiontypes';
 
 const deckSetter = deck => ({
@@ -137,16 +138,19 @@ export const makeMove = () => {
       const { players, cardHands, deck } = play;
       let hitPlayers = 0;
       Object.keys(players).forEach(player => {
+        const handValue = calcValue(cardHands[player]);
         if (
           players[player].history[0] !== 'STAND' &&
-          calcValue(cardHands[player]) < 21
+          handValue < 21
         ) {
-          const { logic } = players[player];
+          const { rawLogic, logic } = players[player];
 
           const toGiveToFunction = {
             deck,
+            rawLogic,
             hand: cardHands[player],
-            otherCards: []
+            otherCards: [],
+            handValue
           };
 
           Object.keys(players).forEach(otherPlayer => {
@@ -174,5 +178,12 @@ export const makeMove = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+};
+
+const logicChanger = newLogic => {
+  return {
+    type: CHANGE_LOGIC,
+    newLogic
   };
 };

@@ -35,7 +35,7 @@ const IfElseBody = props => {
         childId={props.children[1]}
         type="ACTION"
       />
-      <b> Otherwise </b>
+      <b>, Otherwise </b>
       <ChildBlock
         seeking={`${props.id}-2`}
         childId={props.children[2]}
