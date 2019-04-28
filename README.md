@@ -14,8 +14,6 @@ The rules of this Blackjack variation are as followed:
 * Jacks, Queens, and Kings all count as 10 for the purposes of summing
 * Aces count as 11 normally, or 1 when a 11 would cause a Bust
 * If there are multiple Aces in the hand, they aren't necessarily the same value (for example, a hand of a 9 and two Aces sums up to 21-- 11 for the first Ace, and then a 1 for the second Ace)
-* If the two cards that a player were dealt right off the bat summed up to 21 (any Ace plus a card valuing 10), then that is a Blackjack, and the lucky player gets 4 points while the others all get 1
-* Otherwise, at the end of a round, all players show their hands
 * * Players with the highest score get 2 points
 * * Players with the lowest score get 0 points
 * * Any middling players get 1 point
@@ -24,82 +22,11 @@ The rules of this Blackjack variation are as followed:
 Once a bot is unleashed, there can be no modifications made to its behavior mid-game. Once a game has ended, then the user may tinker with the logic, but at the cost of completely wipng its score history.
 
 # TODO
-* Let logic blocks be nested
 * Have logic blocks be read and submitted
 
-* How it will work:
+#How To Build
 - User can press buttons on the side to add a block to the working area
-- Blocks can be rearranged by dragging and dropping
-- Clicking on a block lets you put more blocks within that block
-- Submit button will not be available unless all fillable blocks are filled and all branches lead to either a Hit or a Stand
-
-Valid workspace arrangements:
-
-- [ [ Stand ] ]
-
-- [
-    If
-      [
-        [ Hand's Value ]
-        >
-        [ 17 ]
-      ]
-    Then
-      [
-        [ Stand ]
-      ]
-    Else
-      [
-        [ Hit ]
-      ]
-  ]
-
-- [
-    [
-      If
-        [
-          [ Hand's Value ]
-          >
-          [ 17 ]
-        ]
-      Then
-        [
-          [ Stand ]
-        ]
-    ]
-    [ Hit ]
-  ]
-
-- [
-    [
-      If
-        [
-          [
-            [ Number Of [ ACES ] in [ My Hand ] ]
-            ===
-            [ 1 ]
-          ]
-          AND
-          [
-            [ Number Of [ ACES ] in [ Other People's Visible Cards ] ]
-            <
-            2
-          ]
-        ]
-      Then
-        [
-          [ Hit ]
-        ]
-    ]
-    [
-      If
-        [
-          Random [ 1 / 6 chance ]
-        ]
-      Then
-        [
-          [ Stand ]
-        ]
-    ]
-    [ Hit ]
-  ]
+- Uppermost level blocks can be rearranged by dragging and dropping
+- Clicking in a block's empty fields lets you put more blocks within that block
+- Clicking anywhere else within a block brings up the delete prompt
+- The submit button will not be available unless all fillable blocks are filled and all branches lead to either a Hit or a Stand
