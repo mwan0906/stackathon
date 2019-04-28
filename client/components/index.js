@@ -41,7 +41,7 @@ export const Play = connect(
   mapDispatchToProps
 )(DisconnectedPlay);
 
-class DisconnectedWork extends React.Component {
+export class Work extends React.Component {
   constructor() {
     super();
   }
@@ -55,5 +55,3 @@ class DisconnectedWork extends React.Component {
     );
   }
 }
-
-export { DisconnectedWork };

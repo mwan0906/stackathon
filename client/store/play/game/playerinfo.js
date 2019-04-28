@@ -24,7 +24,9 @@ const intialState = {
   },
   self: {
     logic: info => {
+      console.log(info);
       const { deck, hand, otherCards } = info;
+      const { seen, unaccountedFor } = deck;
       const handValue = calcValue(hand);
       if (handValue > 16) return 'stand'
       return 'hit';
