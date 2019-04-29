@@ -1,33 +1,34 @@
+const ops = {
+  'PLUS': '+',
+  'MINUS': '-',
+  'MULTIPLY': '*',
+  'DIVIDE': '/',
+  'EQUAL': '==',
+  'NOT-EQUAL': '!=',
+  'AND': '&&',
+  'OR': '||',
+  'GREATER-THAN': '>',
+  'LESS-THAN': '<'
+}
+
 const parseBlock = (b, context) => {
   if (!b) return 'ERROR!!';
   let toReturn = '';
   const block = context[b];
   switch (block.subType) {
     case 'PLUS':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '+';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
     case 'MINUS':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '-';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
     case 'MULTIPLY':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '*';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
     case 'DIVIDE':
+    case 'EQUAL':
+    case 'NOT-EQUAL':
+    case 'GREATER-THAN':
+    case 'LESS-THAN':
+    case 'AND':
+    case 'OR':
       toReturn += '(';
       toReturn += parseBlock(block.children[0], context);
-      toReturn += '/';
+      toReturn += ops[block.subType];
       toReturn += parseBlock(block.children[1], context);
       toReturn += ')';
       break;
@@ -70,52 +71,6 @@ const parseBlock = (b, context) => {
       toReturn += '( Math.floor(Math.random() * ';
       toReturn += parseBlock(block.children[0], context);
       toReturn += ') + ';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
-
-    case 'EQUAL':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '==';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
-    case 'NOT-EQUAL':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '!=';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
-
-    case 'AND':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '&&';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
-    case 'OR':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '||';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
-
-    case 'GREATER-THAN':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '>';
-      toReturn += parseBlock(block.children[1], context);
-      toReturn += ')';
-      break;
-
-    case 'LESS-THAN':
-      toReturn += '(';
-      toReturn += parseBlock(block.children[0], context);
-      toReturn += '<';
       toReturn += parseBlock(block.children[1], context);
       toReturn += ')';
       break;
