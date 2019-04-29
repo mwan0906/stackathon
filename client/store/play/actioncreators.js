@@ -169,16 +169,6 @@ export const makeMove = () => {
               rawLogic +
               '})(hand, handValue, withoutAces, unaccountedFor, otherCards)'
           );
-          if (player === 'self') {
-            eval(
-              '((hand, handValue, withoutAces, unaccountedFor, otherCards) => {' +
-                `console.log('hand:', hand);
-                console.log('handValue:', handValue);
-                console.log('withoutAces:', withoutAces);` +
-                '})(hand, handValue, withoutAces, unaccountedFor, otherCards)'
-            );
-            console.log('therefore,', result);
-          }
           if (result === 'hit') {
             hitPlayers++;
             dispatch(getCards(player, 'draw'));
