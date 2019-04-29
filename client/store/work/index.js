@@ -153,8 +153,10 @@ const reducer = (state = initialState, action) => {
         const newNode = { ...newBlocks[ tbd[0] ]};
         if (newNode.parentId && newBlocks[newNode.parentId]) {
           const newParent = {... newBlocks[newNode.parentId]};
-          const deletedChildIndex = newParent.children.indexOf(newNode.id)
-          newParent.children.splice(deletedChildIndex, 1);
+          const newChildren = [ ...newParent.children ];
+          const deletedChildIndex = newChildren.indexOf(newNode.id);
+          delete newChildren[deletedChildIndex];
+          newParent.children = newChildren;
           newBlocks[newNode.parentId] = newParent;
           firstThrough = false;
         }
